@@ -3,13 +3,10 @@ package sg.edu.np.mad.madpractical;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
-
-import java.util.Random;
 
 public class ListActivity extends AppCompatActivity {
 
@@ -18,34 +15,35 @@ public class ListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-        Bundle extras = new Bundle();
-        extras.putString("Name", "Danny");
-        extras.putInt("ID", 1739039545);
+        // Adds an event listener to the image view that shows an alert when tapped
+        ImageView imageView = (ImageView) findViewById(R.id.imageView2);
+        imageView.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Profile");
+            builder.setMessage("MADness");
+            builder.setPositiveButton("View", (dialog, id) -> {
+                // Creates an Intent to MainActivity
+                Intent mainActivity = new Intent(this, MainActivity.class);
 
-        ImageView imageView = findViewById(R.id.profileImage);
-        imageView.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(ListActivity.this);
-                builder.setTitle("Profile");
-                builder.setMessage("MADness");
-                builder.setCancelable(true);
-                builder.setPositiveButton("View", new DialogInterface.OnClickListener(){
+                // Generates a random integer and passes it to MainActivity
+                int random = (int) (Math.random() * 1000000000);
+                mainActivity.putExtra("id", random);
 
-                    public void onClick(DialogInterface dialog, int id){
-                        Intent intent = new Intent(ListActivity.this, MainActivity.class);
-                        intent.putExtras(extras);
-                        startActivity(intent);
-                    }
-                });
-                builder.setNegativeButton("Close", new DialogInterface.OnClickListener(){
-                    public void onClick(DialogInterface dialog, int id){
-                    }
-                });
+                startActivity(mainActivity);
+            });
+            builder.setNegativeButton("Close", (dialog, id) -> {
 
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }
+            });
+
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+        });
+
+        // Adds an event listener to messageGroupButton to start MessageActivity
+        Button messageGroupButton = (Button) findViewById(R.id.messageGroupButton);
+        messageGroupButton.setOnClickListener(v -> {
+            Intent messageActivity = new Intent(this, MessageGroupActivity.class);
+            startActivity(messageActivity);
         });
     }
 }

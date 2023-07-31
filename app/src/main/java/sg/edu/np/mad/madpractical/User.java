@@ -10,12 +10,14 @@ public class User {
 
     }
 
-    public User(String N, String D, int ID) {
-        name = N;
-        description = D;
-        id = ID;
-        followed = false;
+
+    public User(String name, String description, int id, boolean followed) {
+        this.name = name;
+        this.description = description;
+        this.id = id;
+        this.followed = followed;
     }
+
 
     public String getName() {
         return name;
